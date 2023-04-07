@@ -82,9 +82,9 @@ width: 50%;
   </div>
   <div id="main">
     <div id="chartdiv">
-      <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-      <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-      <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+           <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
       <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
       <div id="barchart">
       <script type="text/javascript">var data={{blog_dataset|tojson}}</script>
@@ -93,16 +93,21 @@ width: 50%;
     </div>
     <div id="split">
     <div id="left">
-      <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-      <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-      <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
-      <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-      
-         <script type="text/javascript">var data={{categories_dataset|tojson}}</script>
-          <script src="/static/js/category_barchart.js"></script>
-      
+        <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+        <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+        <script type="text/javascript">var data={{categories_dataset|tojson}}</script>
+        <script src="/static/js/category_barchart.js"></script>
+
   </div>
       <div id="right">
+          <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+          <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+          <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+          <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+          <script type="text/javascript">var data={{blogs_by_year|tojson}}</script>
+          <script src="/static/js/piechart.js"></script>
       </div>
     </div>
   </div>
