@@ -2,6 +2,9 @@ from flask import Flask, render_template
 import os, pymongo, urllib
 from src import *
 import requests, json
+from datetime import datetime
+
+
 app = Flask(__name__)
 # Replace <your-site> and <your-auth> with your WordPress site and authentication details
 url1 = "https://statusneo.com/wp-json/wp/v2/posts?per_page=100&page=1"
@@ -22,11 +25,43 @@ data3 = response3.json()
 
 merged_data = data1+data2+data3
 response = merged_data
+# Set the year range you want to analyze
+start_year = 2020
+end_year = datetime.now().year
+
+# Create an empty dictionary to store the count of blogs by year
+blogs_by_year = []
+
+# Loop through each year in the range
+for year in range(start_year, end_year+1):
+
+    # Set the start and end date for the year
+    start_date = datetime(year, 1, 1).isoformat()
+    end_date = datetime(year+1, 1, 1).isoformat()
+
+    # Set the query parameters for the WordPress API request
+    params = {
+        "after": start_date,
+        "before": end_date,
+        "per_page": 100,
+        "page": 1
+        # We only need to fetch one post to get the total count for the year
+    }
+    # Replace "example.com" with the URL of your WordPress site
+    url = "https://statusneo.com/wp-json/wp/v2/posts"
+
+    # Send the request to the WordPress API
+    year_response = requests.get(url, params=params)
+
+    # Get the total count of posts for the year
+    total_posts = int(year_response.headers["X-WP-Total"])
+    # Add the count to the dictionary
+    blogs_by_year.append({"year": str(year), "blogs": total_posts})
+
 # Check if the request was successful
 if response:
     # Initialize a dictionary to store the number of blogs written by each user
     blogs_by_user = {}
-
     # Loop through each post and increment the count for the corresponding user
     for post in response:
         author_id = post["author"]
@@ -95,8 +130,7 @@ def index():
         print("Failed to retrieve categories. Status code:", response.status_code)
     # Sort the list in descending order by the "count" key
     categories_dataset = sorted(categories_dataset, key=lambda x: x["count"], reverse=True)
-    return render_template("index.html", blog_dataset=dataset[:25], categories_dataset=categories_dataset[:15])
-
+    return render_template("index.html", blog_dataset=dataset[:25], categories_dataset=categories_dataset[:15], blogs_by_year=blogs_by_year)
 
 if __name__ == "__main__":
     app.run(debug=True)
